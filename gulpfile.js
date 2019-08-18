@@ -40,7 +40,7 @@ gulp.task('svgSpriteBuild', function () {
 });
 
 gulp.task('styles', function () {
-  return gulp.src('sass/*.sass')
+  return gulp.src('scss/main.scss')
     .pipe(sass({
       includePaths: require('node-bourbon').includePaths
     }).on('error', sass.logError))
@@ -54,11 +54,7 @@ gulp.task('styles', function () {
 
 gulp.task('scripts', function() {
   return gulp.src([
-    './app/libs/jquery/jquery-3.3.1.min.js',
-    './app/libs/jquery/jquery.easy-autocomplete.min.js',
-    './app/js/datepicker.min.js',
-    './app/js/datepicker.en.js',
-    './app/js/mixitup.min.js'
+    './app/libs/jquery/jquery-3.3.1.min.js'
   ])
     .pipe(concat('libs.js'))
     // .pipe(uglify()) //Minify libs.js
@@ -75,7 +71,7 @@ gulp.task('common', function() {
 });
 
 gulp.task('watch', function () {
-  gulp.watch('sass/*.sass', ['styles']);
+  gulp.watch('scss/**/*.scss', ['styles']);
   gulp.watch('app/libs/**/*.js', ['scripts']);
   gulp.watch('app/js/common.js', ['common']);
   gulp.watch('app/js/*.js').on("change", browserSync.reload);
