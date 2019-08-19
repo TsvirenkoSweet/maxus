@@ -6,12 +6,11 @@ const
   rename       = require('gulp-rename'),
   browserSync  = require('browser-sync').create(),
   concat       = require('gulp-concat'),
-  inject       = require('gulp-inject'),
   uglify       = require('gulp-uglify'),
   svgSprite    = require('gulp-svg-sprites'),
   svgmin       = require('gulp-svgmin');
 
-gulp.task('browser-sync', ['styles', 'scripts', 'common', 'svgSpriteBuild'], function() {
+gulp.task('browser-sync', ['styles', 'scripts', 'common', 'svgSprite'], function() {
   browserSync.init({
     server: {
       baseDir: "./app"
@@ -20,7 +19,7 @@ gulp.task('browser-sync', ['styles', 'scripts', 'common', 'svgSpriteBuild'], fun
   });
 });
 
-gulp.task('svgSpriteBuild', function () {
+gulp.task('svgSprite', function () {
   return gulp.src('svg/*.svg')
     .pipe(svgmin({
       js2svg: {
@@ -30,7 +29,7 @@ gulp.task('svgSpriteBuild', function () {
     .pipe(svgSprite({
         mode: "symbols",
         preview: false,
-        selector: "marinet_%f",
+        selector: "maxus_%f",
         svg: {
           symbols: 'sprite.svg'
         }
@@ -40,7 +39,7 @@ gulp.task('svgSpriteBuild', function () {
 });
 
 gulp.task('styles', function () {
-  return gulp.src('scss/main.scss')
+  return gulp.src('dev/scss/main.scss')
     .pipe(sass({
       includePaths: require('node-bourbon').includePaths
     }).on('error', sass.logError))
@@ -54,27 +53,27 @@ gulp.task('styles', function () {
 
 gulp.task('scripts', function() {
   return gulp.src([
-    './app/libs/jquery/jquery-3.3.1.min.js'
+    'dev/js/libs/jquery/jquery-3.4.1.js'
   ])
-    .pipe(concat('libs.js'))
-    // .pipe(uglify()) //Minify libs.js
+    .pipe(concat('libs.min.js'))
+    .pipe(uglify())
     .pipe(gulp.dest('./app/js/'));
 });
 
 gulp.task('common', function() {
   return gulp.src([
-    './app/js/common.js'
+    'dev/js/common.js'
   ])
     .pipe(concat('common.min.js'))
-    .pipe(uglify()) // Minify common.js
+    .pipe(uglify())
     .pipe(gulp.dest('./app/js/'));
 });
 
 gulp.task('watch', function () {
-  gulp.watch('scss/**/*.scss', ['styles']);
-  gulp.watch('app/libs/**/*.js', ['scripts']);
-  gulp.watch('app/js/common.js', ['common']);
-  gulp.watch('app/js/*.js').on("change", browserSync.reload);
+  gulp.watch('dev/scss/**/*.scss', ['styles']);
+  gulp.watch('dev/js/libs/**/*.js', ['scripts']);
+  gulp.watch('dev/js/common.js', ['common']);
+  gulp.watch('dev/js/*.js').on("change", browserSync.reload);
   gulp.watch('app/*.html').on('change', browserSync.reload);
 });
 
