@@ -8,10 +8,12 @@ const
   browserSync  = require('browser-sync').create(),
   concat       = require('gulp-concat'),
   uglify       = require('gulp-uglify'),
+  cache        = require('gulp-cache'),
+  imagemin     = require('gulp-imagemin'),
   svgSprite    = require('gulp-svg-sprites'),
   svgmin       = require('gulp-svgmin');
 
-gulp.task('browser-sync', ['styles', 'scripts', 'common', 'html', 'svgSprite'], function() {
+gulp.task('browser-sync', ['fonts', 'styles', 'scripts', 'common', 'html', 'svgSprite', 'images'], function() {
   browserSync.init({
     server: {
       baseDir: "./app"
@@ -21,7 +23,7 @@ gulp.task('browser-sync', ['styles', 'scripts', 'common', 'html', 'svgSprite'], 
 });
 
 gulp.task('svgSprite', function () {
-  return gulp.src('./dev/svg/*.svg')
+  return gulp.src('./dev/img/svg/**/*.svg')
     .pipe(svgmin({
       js2svg: {
         pretty: true
@@ -81,11 +83,34 @@ gulp.task('html', function() {
     .pipe(gulp.dest('./app'));
 });
 
+gulp.task('images', function(){
+  return gulp.src([
+    './dev/img/**/*.+(png|jpg|jpeg)',
+    '!/dev/img/svg/**/*.svg'
+  ])
+  // Caching images that ran through imagemin
+    .pipe(cache(imagemin({
+      optimizationLevel: 3,
+      progressive: true,
+      interlaced: true
+    })))
+    .pipe(gulp.dest('./app/img/'))
+});
+
+gulp.task('fonts', function() {
+  return gulp.src([
+    './dev/fonts/**/*'
+  ])
+    .pipe(gulp.dest('./app/fonts/'));
+});
+
 gulp.task('watch', function () {
   gulp.watch('./dev/scss/**/*.scss', ['styles']);
   gulp.watch('./dev/js/libs/**/*.js', ['scripts']);
   gulp.watch('./dev/js/common.js', ['common']);
   gulp.watch('./dev/*.html', ['html']);
+  gulp.watch('./dev/img/svg/**/*.svg', ['svgSprite']);
+  gulp.watch('./dev/img/**/*.+(png|jpg|jpeg)', ['images']);
   gulp.watch('./dev/js/*.js').on("change", browserSync.reload);
   gulp.watch('./dev/*.html').on('change', browserSync.reload);
 });
