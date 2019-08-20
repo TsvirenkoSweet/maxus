@@ -14,7 +14,7 @@ const
 gulp.task('browser-sync', ['styles', 'scripts', 'common', 'html', 'svgSprite'], function() {
   browserSync.init({
     server: {
-      baseDir: "./dev"
+      baseDir: "./app"
     },
     notify: false
   });
