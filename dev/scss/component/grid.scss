@@ -1,0 +1,61 @@
+@import "variable";
+.grid-card {
+  background-image: linear-gradient(to right,#e2e2e2 0,#ffffff 51%,#e2e2e2 100%);
+  border-bottom: 2px solid #ea0a2a;
+  padding-top: $mobilePadding;
+  padding-bottom: $mobilePadding;
+}
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: $mobileMargin;
+  margin-left: $mobileMargin;
+  .grid-card {
+    border-bottom: 2px solid #ea0a2a;
+  }
+}
+.grid-item {
+  position: relative;
+  min-height: 1px;
+  padding-left: $mobilePadding;
+  padding-right: $mobilePadding;
+  &:last-child {
+    border-bottom: none;
+  }
+}
+@media all and (min-width: 481px) {
+  .grid {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: $mobileMargin;
+    margin-left: $mobileMargin;
+    .grid-card {
+      border-bottom: 2px solid #ea0a2a;
+      &:nth-child(odd) {
+        border-right: 1px solid #ea0a2a;
+      }
+      &:nth-child(even) {
+        border-left: 1px solid #ea0a2a;
+      }
+      &:nth-last-of-type(-n+2) {
+        border-bottom: none;
+      }
+    }
+  }
+}
+@media all and (min-width: 769px) {
+  .grid {
+    justify-content: center;
+    .grid-card {
+      border: none !important;
+    }
+  }
+}
+@media (min-width: 1200px) {
+  .grid {
+    background: $color_main;
+    .grid-card {
+      background: $color_main;
+    }
+  }
+}

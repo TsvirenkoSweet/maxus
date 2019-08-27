@@ -1,2 +1,9 @@
 @import "mixins";
-@include font-face(Montserrat, '../../fonts/Montserrat/Montserrat-Bold', 500, normal, ttf eot woff svg);
+@include font-face(Bebas,     '../../fonts/Bebas/Bebas', 400,                                 normal, ttf eot woff svg);
+@include font-face(Helvetica, '../../fonts/Helvetica/HelveticaNeueCyr-Thin', 100,             normal, ttf eot woff svg);
+@include font-face(Helvetica, '../../fonts/Helvetica/HelveticaNeueCyr-UltraLight', 200,       normal, ttf eot woff svg);
+@include font-face(Helvetica, '../../fonts/Helvetica/HelveticaNeueCyr-Light', 300,            normal, ttf eot woff svg);
+@include font-face(Helvetica, '../../fonts/Helvetica/HelveticaNeueCyr-Medium', 500,           normal, ttf eot woff svg);
+@include font-face(Helvetica, '../../fonts/Helvetica/HelveticaNeueCyr-Roman', normal,         normal, ttf eot woff svg);
+@include font-face(Helvetica, '../../fonts/Helvetica/HelveticaNeueCyr-Bold', bold,            normal, ttf eot woff svg);
+@include font-face(Helvetica, '../../fonts/Helvetica/HelveticaNeueCyr-Heavy', 900,            normal, ttf eot woff svg);
